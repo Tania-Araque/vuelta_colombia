@@ -1,0 +1,34 @@
+def crear_ciclista(conexion, ciclista):
+  """
+  Función creación ciclista.
+  Recibe un objeto Connection.
+  Recibe una lista de la siguiente manera:
+  [ num_inscripcion ,num_identificacion ,nombre ,apellido ,fecha_nacimiento ,pais ,num_equipo ,fotografia ,ranking_UIC]
+  """
+  cursor              = conexion.cursor()
+  sentencia_insercion = 'INSERT INTO ciclista(num_inscripcion ,num_identificacion ,nombre ,apellido ,fecha_nacimiento ,pais ,num_equipo ,fotografia ,ranking_UIC) VALUES(?,?,?,?,?,?,?,?,?)'
+  cursor.execute(sentencia_insercion, ciclista)
+  conexion.commit()
+
+
+def actualizar_ranking_UIC(conexion, id_ciclista, nuevo_ranking_UIC):
+    """
+  Función actualización ranking UIC.
+  Recibe el número del ciclista pra la actualización del ranking UIC (num_identificacion).
+  Recibe el nuevo ranking UIC.
+    """
+  cursor                  = conexion.cursor()
+  sentencia_actualizacion = f'UPDATE ciclista SET ranking_UIC = "{nuevo_ranking_UIC}", WHERE num_identificacion = {id_ciclista}'
+  cursor.execute(sentencia_actualizacion)
+  conexion.commit()
+
+
+def consultar_info_vigente(conexion):
+  """
+  Función consultar informacion viegente.
+  Recibe un objeto Connection (conexion).
+  """
+  cursor             = conexion.cursor()
+  sentencia_consulta = f'SELECT * FROM ciclistas'
+  respuesta_consulta = cursor.execute(sentencia_consulta).fetchall()
+  return respuesta_consulta
